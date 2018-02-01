@@ -217,7 +217,7 @@ adc_init() {
 	receive_data();
 	*/
 
-	/* Only enable channel 6 on all devices */
+	/* Enable all 8 channels on all devices */
 	config_buf[0] = PROG_REG(AUTO_SEQ_EN, WRITE, 0xFF);
 	config_buf[1] = PROG_REG(AUTO_SEQ_EN, WRITE, 0xFF);
 	config_buf[2] = PROG_REG(AUTO_SEQ_EN, WRITE, 0xFF);
