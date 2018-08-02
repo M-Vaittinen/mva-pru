@@ -25,6 +25,7 @@
 			0x0ec 0x05 /* MOSI_5, lcd_ac_bias_en,  MUX_MODE5 | OUTPUT, P8.30, PRU1[11] GPI/GPO */
 			0x080 0x05 /* MOSI_6, gpmc_csn1,       MUX_MODE5 | OUTPUT, P8.21, PRU1[12] GPI/GPO */
 			0x084 0x05 /* SCLK_OUT, gpmc_csn2,     MUX_MODE5 | OUTPUT, P8.20, PRU1[13] GPI/GPO */
+			0x038 0x07 /* OE, GPIO1_14,	       MUX_MODE7 | OUTPUT, P8.16, GPIO1_14 GPIO */
 		>;
 	};
 };
