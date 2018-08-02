@@ -188,9 +188,9 @@ void *print_func(void *data)
 	/* Print each channel's min, max, and RMS values to the screen */
 	while (1) {
 		for(i = 0; i < NUM_CHANNELS/2; i++) {
-			mvprintw(i, 0, "Ch%02d Vpp:[%.3f,%.3f]", i, min[i], max[i]);
+                        mvprintw(i, 0, "D%d:C%d Vpp:[%.3f,%.3f] ", i/8+1, i%8, min[i], max[i]);
 			mvprintw(i, 28, "RMS:%.3f", result[i]);
-			mvprintw(i, 39, "| Ch%02d Vpp:[%.3f,%.3f]", i+NUM_CHANNELS/2, min[i+NUM_CHANNELS/2], max[i+NUM_CHANNELS/2]);
+			mvprintw(i, 39, "| D%d:C%d Vpp:[%.3f,%.3f] ", (i+NUM_CHANNELS/2)/8+1, i%8, min[i+NUM_CHANNELS/2], max[i+NUM_CHANNELS/2]);
 			mvprintw(i, 69, "RMS:%.3f", result[i+NUM_CHANNELS/2]);
 		}
 
