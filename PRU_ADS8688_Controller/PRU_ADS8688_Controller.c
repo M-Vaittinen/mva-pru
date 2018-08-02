@@ -96,13 +96,13 @@ volatile register uint32_t __R31;
 #define OVERSAMPLE		1
 
 /* Frequency estimation constants */
-#define FREQ_EST_DEVICE		4
+#define FREQ_EST_DEVICE		5	//1 based index to match silkscreen
 #define FREQ_EST_CHANNEL	5
 #define FREQ_EST_CYCLES		5
-#define MIN_DELAY		710 //55Hz
-#define DEFAULT_DELAY		781 //50Hz
-#define DEFAULT_COMP		2   //50Hz
-#define MAX_DELAY		868 //45Hz
+#define MIN_DELAY		710	//55Hz
+#define DEFAULT_DELAY		781	//50Hz
+#define DEFAULT_COMP		2	//50Hz
+#define MAX_DELAY		868	//45Hz
 
 /* Information about devices and channels connected */
 #define CHANS_PER_DEVICE	8
@@ -318,7 +318,7 @@ void main(void)
 				if (oversample == OVERSAMPLE) {
 					chan_data_temp[idx] = (uint16_t)((chan_data_temp[idx] + (OVERSAMPLE/2)) / OVERSAMPLE);
 					/* Frequency estimation using zero crossings */
-					if (j == FREQ_EST_DEVICE && i == FREQ_EST_CHANNEL) {
+					if (j == (FREQ_EST_DEVICE - 1) && i == FREQ_EST_CHANNEL) {
 						if (((last_pol > 0) && ((int16_t)(chan_data_temp[idx] - 0x8000) < 0)) || 
 						    ((last_pol < 0) && ((int16_t)(chan_data_temp[idx] - 0x8000) > 0))) {
 							zero_crossings++;
