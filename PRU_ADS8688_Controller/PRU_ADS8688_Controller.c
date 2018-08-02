@@ -96,7 +96,7 @@ volatile register uint32_t __R31;
 #define OVERSAMPLE		1
 
 /* Frequency estimation constants */
-#define FREQ_EST_DEVICE		0
+#define FREQ_EST_DEVICE		4
 #define FREQ_EST_CHANNEL	5
 #define FREQ_EST_CYCLES		5
 #define MIN_DELAY		710 //55Hz
