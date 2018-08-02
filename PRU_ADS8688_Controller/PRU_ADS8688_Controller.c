@@ -149,7 +149,8 @@ send_command(uint16_t continuous) {
 
 	/* Wait for SPI coprocessor to acknowledge the command */
 	while (!(status & SEND_ACK_BIT)) {
-		__xin(SCRATCHPAD_1, STATUS_REG, 0, status);
+		__xin(SCRATCHPAD_1, STATUS_REG, 0, temp);
+		status = temp;
 	} 
 
 	/* Clear the start bit */
