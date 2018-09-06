@@ -1,20 +1,3 @@
-# ARM_CCT environment variable must point to the ARM cross-compile toolchain. E.g.:
-#(Desktop Linux) export ARM_CCT=$(HOME)/ti-processor-sdk-linux-rt-amxxx-evm-ww.xx.yy.zz/
-#linux-devkit/sysroots/x86_64-arago-linux/usr/bin
-
-ifndef ARM_CCT
-define ERROR_BODY
-
-*******************************************************************************
-ARM_CCT environment variable is not set. Examples given:
-(Desktop Linux) export ARM_CCT=$(HOME)/ti-processor-sdk-linux-rt-amxxx-evm-ww.xx.yy.zz/
-linux-devkit/sysroots/x86_64-arago-linux/usr/bin
-*******************************************************************************
-
-endef
-$(error $(ERROR_BODY))
-endif
-
 MKFILE_PATH := $(abspath $(lastword $(MAKEFILE_LIST)))
 CURRENT_DIR := $(notdir $(patsubst %/,%,$(dir $(MKFILE_PATH))))
 PROJ_NAME=$(CURRENT_DIR)
@@ -47,7 +30,7 @@ $(TARGET):
 	@echo ''
 	@echo 'Building target: $@'
 	@echo 'Invoking: ARM x86 Cross Compiler'
-	$(ARM_CCT)/arm-linux-gnueabihf-gcc -Wall $(SOURCES) $(CFLAGS) -o $(TARGET) -lncurses -lpthread
+	$(CC) -Wall $(SOURCES) $(CFLAGS) -o $(TARGET) -lncurses -lpthread
 	@echo 'Finished building target: $@'
 
 .PHONY: all clean
