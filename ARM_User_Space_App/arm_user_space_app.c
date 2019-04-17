@@ -179,6 +179,9 @@ void *print_func(void *data)
 	int i;
 	float frequency;
 
+        /* Resize the terminal to display all lines */
+        system("resize -s 30 80");
+
 	/* Initialize the screen */
 	initscr();
 	/* Set the timeout to 250ms for waiting for user input */
