@@ -55,7 +55,8 @@ volatile register uint32_t __R31;
  * Using the name 'rpmsg-raw' will probe the rpmsg_char driver found
  * at linux-x.y.z/drivers/rpmsg/rpmsg_char.c
  */
-#define CHAN_NAME                       "rpmsg-raw"
+#define CHAN_NAME			"rpmsg-bd79104"
+/* #define CHAN_NAME                       "rpmsg-raw" */
 #define CHAN_PORT                       30
 
 /*
