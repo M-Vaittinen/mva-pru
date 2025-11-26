@@ -1,0 +1,51 @@
+Excellent guide by Bootlin!
+ - https://bootlin.com/doc/training/embedded-linux-beagleplay/embedded-linux-beagleplay-labs.pdf
+ - Copied to our git:
+   - tetrao-urogallus, docs/embedded-linux-beagleplay-labs.pdf
+ - This covers all the steps for setting up environment and building the boot-layers for all processors. Contains also guide for Linux compilation, TFTP-boot and NFS share!
+
+NFS share:
+ - /home/mvaittin/nfsplay
+ - Don't remember which of following I used:
+   - One extracted from an SD-card image using loop-device mount.
+   - One copied from running BeaglePlay using rsync.
+ - Required systemd change to NOT drop eth0 at boot - or NFS rootfs vanishes
+   - Details forgotten
+
+TFTP-boot
+ - /var/lib/tftpboot serves Image.gz and k3-am625-beagleplay.dtb
+
+TI-compiler for PRU. I suppose contains C-compiler and also an assembler.
+ - /home/mvaittin/gits/mva-pru/external-tools/ti-compiler
+ - Installers: /home/mvaittin/BeaglePlay/PRU-CodeGenTools-TI
+   - Installers are 32 bit, tools work on 64 bit!
+   - Newest (2.3.3) installer does not work on my Fedora
+   - 2.3.2 worked
+
+C-compiler for Linux (64bit ARM's):
+ - I think I used this one:
+   - /home/mvaittin/BeaglePlay/Toolchain-Not-TI
+ - As setup here:
+   - /home/mvaittin/BeaglePlay/kernel/linux/com_pile.sh
+   - /home/mvaittin/BeaglePlay/kernel/linux/bilecom.sh
+   - NOTE! The MOD_INSTALL_PATH did not work from env! Needed to be given from command line to make.
+
+Kernel with PRU support:
+ - https://github.com/M-Vaittinen/linux/commits/b-play-adc-poc/
+
+Overlay_merger:
+ - /home/mvaittin/gits/tetrao-urogallus/overlay_merger/build-play.sh
+   - Requires Makefile change to ditch the am335x specific ARCH and CROSS_COMPILE as those come from env on my BeaglePlay approach.
+   - Requires manual copying to correct NFS share as the am335x is default location.
+
+RPMSG for BD79104:
+  - Driver:
+    - https://github.com/M-Vaittinen/linux/commits/b-play-adc-poc/
+  - Test device-tree:
+    - /home/mvaittin/gits/tetrao-urogallus/bd79104_rpmsg/bd79104_rpmsg_test.dts
+  - PRU side stuff:
+    - /home/mvaittin/gits/pru-software-support-package:
+      - compiler setup; source build.sh
+      - beagle-bone-black SPI / RPMSG test: examples/am335x/PRU_RPMsg_Echo_Interrupt0
+      - BeaglePlay: exmples/am62x/PRU_RPMSG / PRU_Direct_Connect
+
