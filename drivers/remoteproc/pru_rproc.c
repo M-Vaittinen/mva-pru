@@ -859,7 +859,7 @@ static struct rproc_ops pru_rproc_ops = {
  * by ARM64 memcpy implementation) and throws an exception. The DRAM memory
  * ports do not show this behavior.
  */
-static int pru_rproc_memcpy(void *dest, const void *src, size_t count)
+static int pru_rproc_memcpy(void *dest, const void *src, size_t count, bool is_iram)
 {
 	const u32 *s = src;
 	u32 *d = dest;
@@ -870,8 +870,11 @@ static int pru_rproc_memcpy(void *dest, const void *src, size_t count)
 	 * TODO: relax limitation of 4-byte aligned dest addresses and copy
 	 * sizes
 	 */
-	if ((long)dest % 4 || count % 4)
+	if (is_iram && ((unsigned long)dest % 4 || count % 4)) {
+		pr_err("MVa: IRAM error check - unaligned copy\n");
+		pr_err("MVa: dest %lu count %lu\n", (unsigned long)dest, count);
 		return -EINVAL;
+	}
 
 	/* src offsets in ELF firmware image can be non-aligned */
 	if ((long)src % 4) {
@@ -942,10 +945,10 @@ pru_rproc_load_elf_segments(struct rproc *rproc, const struct firmware *fw)
 
 		if (pru->data->is_k3) {
 			ret = pru_rproc_memcpy(ptr, elf_data + phdr->p_offset,
-					       filesz);
+						       filesz, is_iram);
 			if (ret) {
-				dev_err(dev, "PRU memory copy failed for da 0x%x memsz 0x%x\n",
-					da, memsz);
+				dev_err(dev, "PRU memory copy failed for da 0x%x memsz 0x%x - ret %d\n",
+					da, memsz, ret);
 				break;
 			}
 		} else {
