@@ -1,0 +1,45 @@
+/dts-v1/;
+
+#include "k3-am625-beagleplay.dts"
+
+/{
+	/*
+	dummyreg: dummyreg {
+		compatible = "regulator-fixed";
+		regulator-name = "dummyreg";
+		regulator-min-microvolt = <3300000>;
+		regulator-max-microvolt = <3300000>;
+		regulator-boot-on;
+		regulator-always-on;
+	};*/
+	remote_adc {
+		reg = <0>;
+		#address-cells = <1>;
+		#size-cells = <0>;
+		compatible = "rohm,bd79104-rpmsg";
+		pinctrl-0 = <&pru_spi_pins>;
+		pinctrl-names = "default";
+	};
+};
+
+&main_i2c3 {
+	/delete-property/ pinctrl-0;
+};
+
+&main_spi2 {
+	/delete-property/ pinctrl-0;
+};
+
+
+
+&main_pmx0 {
+	pru_spi_pins: pru0_spi_pins {
+		pinctrl-single,pins = <
+			AM62X_IOPAD(0x0194, PIN_OUTPUT, 4) /* pin B19 (default SPI2 D0) mux address 0x000F4194 MODE 4 = PR0_IEP0_EDIO_DATA_IN_OUT28  */
+			AM62X_IOPAD(0x0198, PIN_INPUT, 4) /* pin A19 (default SPI2 D1) mux address 0x000F4198 MODE 4 = PR0_IEP0_EDIO_DATA_IN_OUT29  */
+			AM62X_IOPAD(0x01d0, PIN_OUTPUT, 6) /* A15 (default UART0_CTSn) mux address 0x000F41D0 MODE 6 = PR0_ECAP0_SYNC_OUT */
+			AM62X_IOPAD(0x01d4, PIN_INPUT, 6) /* B15 (default UART0_RTSn) mux address 0x000F41D4 MODE 6 = PR0_ECAP0_IN_APWM_OUT */>;
+	};
+};
+
+
